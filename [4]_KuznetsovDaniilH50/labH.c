@@ -1,11 +1,6 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "labH.h"
-
-
-
-node *bottom, *last, *deleted;
 
 void bottomIni(void){
 	bottom = malloc(sizeof(node));
@@ -47,23 +42,38 @@ node *Split(node *root){
 	return root;
 }
 
-node *add(node *root, int k){
+node *search(node *root, int k){
 	if(root == bottom){
-		node *tmp = malloc(sizeof(node));
-		tmp->key = k;
-		tmp->level = 1;
-		tmp->left = bottom;
-		tmp->right = bottom;
-		root = tmp;
-	}else{
-		if(k < root->key){
-			root->left = add(root->left, k);
-		}else{
-			root->right = add(root->right, k);
-		}
+		return bottom;
 	}
-	root = Skew(root);
-	root = Split(root);
+	node *tmp = root;
+	if(tmp->key < k){
+		tmp = search(tmp->right, k);
+	}else if(tmp->key > k){
+		tmp = search(tmp->left, k);
+	}
+	return tmp;
+}
+
+node *add(node *root, int k){
+	if(search(root, k) == bottom){
+		if(root == bottom){
+			node *tmp = malloc(sizeof(node));
+			tmp->key = k;
+			tmp->level = 1;
+			tmp->left = bottom;
+			tmp->right = bottom;
+			root = tmp;
+		}else{
+			if(k < root->key){
+				root->left = add(root->left, k);
+			}else{
+				root->right = add(root->right, k);
+			}
+		}
+		root = Skew(root);
+		root = Split(root);
+	}
 	return root;
 }
 
@@ -99,19 +109,6 @@ node *delete(node *root, int k){
     return root;
 }
 
-node *search(node *root, int k){
-	if(root == bottom){
-		return bottom;
-	}
-	node *tmp = root;
-	if(tmp->key < k){
-		tmp = search(tmp->right, k);
-	}else if(tmp->key > k){
-		tmp = search(tmp->left, k);
-	}
-	return tmp;
-}
-
 void printtree(node *root){
 	if(root == bottom){
 		return;
@@ -121,5 +118,3 @@ void printtree(node *root){
 	printtree(root->right);
 	return;
 }
-
-
