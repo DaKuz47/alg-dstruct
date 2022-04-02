@@ -7,6 +7,9 @@ typedef struct tree{
 	struct tree* right;
 }node;
 
+
+extern node *bottom, *last, *deleted;
+
 void bottomIni(void);
 
 node *create(node *root, int k);
