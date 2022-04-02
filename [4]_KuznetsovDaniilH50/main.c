@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "labH.h"
 
+node *bottom, *last, *deleted;
 
 int main(void) {
 	bottomIni();
@@ -24,5 +25,3 @@ int main(void) {
 	}
 	return 0;
 }
-
-
