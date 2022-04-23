@@ -4,6 +4,10 @@
 
 void bottomIni(void){
 	bottom = malloc(sizeof(node));
+	if(!bottom){
+		printf("Memory allocation error");
+		return;
+	}
 	bottom->level = 0;
 	bottom->right = bottom;
 	bottom->left = bottom;
@@ -13,6 +17,10 @@ void bottomIni(void){
 
 node *create(node *root, int k){
 	node *tmp = malloc(sizeof(node));
+	if(!tmp){
+		printf("Memory allocation error");
+		return NULL;
+	}
 	tmp->key = k;
 	tmp->level = 1;
 	tmp->left = bottom;
@@ -59,6 +67,10 @@ node *add(node *root, int k){
 	if(search(root, k) == bottom){
 		if(root == bottom){
 			node *tmp = malloc(sizeof(node));
+			if(!tmp){
+				printf("Memory allocation error");
+				return NULL;
+			}
 			tmp->key = k;
 			tmp->level = 1;
 			tmp->left = bottom;
