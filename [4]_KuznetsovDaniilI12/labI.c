@@ -3,7 +3,7 @@
 
 #include "labI.h"
 
-Btree* tree_init(int x){	//Инитсиализатсия дерева
+Btree* tree_init(int x){	//РРЅРёС‚СЃРёР°Р»РёР·Р°С‚СЃРёСЏ РґРµСЂРµРІР°
 	Btree* Tr = malloc(sizeof(Btree));
 	node* r = malloc(sizeof(node));
 	r->keys = malloc(sizeof(int)*(2*x-1));
@@ -20,7 +20,7 @@ Btree* tree_init(int x){	//Инитсиализатсия дерева
 	return Tr;
 }
 
-node* keyFinder(node* r, int k){		//Поиска ключа в узле и подузлах
+node* keyFinder(node* r, int k){		//РџРѕРёСЃРєР° РєР»СЋС‡Р° РІ СѓР·Р»Рµ Рё РїРѕРґСѓР·Р»Р°С…
 	node* exist = NULL;
 	int i = r->n;
 	while((k <= r->keys[i-1]) && i > 0){
@@ -35,7 +35,7 @@ node* keyFinder(node* r, int k){		//Поиска ключа в узле и подузлах
 	return exist;
 }
 
-void Node_Split(node* s, int i, int t){			//Разделение заполненного узла на два
+void Node_Split(node* s, int i, int t){			//Р Р°Р·РґРµР»РµРЅРёРµ СѓР·Р»Р° РЅР° РґРІР°
 	node* a = malloc(sizeof(node));
 	a->keys = malloc(sizeof(int)*(2*t-1));
 	a->childs = malloc(sizeof(node*)*2*t);
@@ -69,7 +69,7 @@ void Node_Split(node* s, int i, int t){			//Разделение заполненного узла на два
 	return;
 }
 
-void add_node(node* s, int k, int t){				//Добавление ключа в незаполненный узел
+void add_node(node* s, int k, int t){				//Р”РѕР±Р°РІР»РµРЅРёРµ РєР»СЋС‡Р° РІ РЅРµР·Р°РїРѕР»РЅРµРЅРЅС‹Р№ СѓР·РµР»
 	int i = s->n;
 	if(s->leaf){
 		while((k < s->keys[i-1]) && (i > 0)){
@@ -93,7 +93,7 @@ void add_node(node* s, int k, int t){				//Добавление ключа в незаполненный узел
 	return;
 }
 
-void add(Btree* Tr, int k){						//Добавление ключа в дерево, если такого ещё нет
+void add(Btree* Tr, int k){						//Р”РѕР±Р°РІР»РµРЅРёРµ РєР»СЋС‡Р° РІ РґРµСЂРµРІРѕ
 	node* r = Tr->root;
 	if(!keyFinder(r, k)){
 		if (r->n == 2 * Tr->t - 1){
@@ -121,7 +121,7 @@ void add(Btree* Tr, int k){						//Добавление ключа в дерево, если такого ещё не
 
 void node_turn(node* r, int c, _Bool direction){
 	node* p = r->parent;
-	if(direction == tRIGHT){		//Поворот налево
+	if(direction == tRIGHT){		//РџРµСЂРµРЅРѕСЃ(РїРѕРІРѕСЂРѕС‚) РєР»СЋС‡Р° СЃРїСЂР°РІР°
 		node* nbhd = p->childs[c+1];
 		r->keys[r->n] = p->keys[c];
 		p->keys[c] = nbhd->keys[0];
@@ -137,7 +137,7 @@ void node_turn(node* r, int c, _Bool direction){
 		}
 		r->n += 1;
 		nbhd->n -= 1;
-	}else if(direction == tLEFT){	//Поворот направо
+	}else if(direction == tLEFT){	//РџРµСЂРµРЅРѕСЃ(РїРѕРІРѕСЂРѕС‚) РєР»СЋС‡Р° СЃР»РµРІР°
 		node* nbhd = p->childs[c-1];
 		for(int j = r->n; j >= 1; j--){
 			r->keys[j] = r->keys[j-1];
@@ -157,7 +157,7 @@ void node_turn(node* r, int c, _Bool direction){
 	return;
 }
 
-void merge(node* left, node* right, int c_ind, int t){ //Слияние двух узлов
+void merge(node* left, node* right, int c_ind, int t){ //РЎР»РёСЏРЅРёРµ РґРІСѓС… СѓР·Р»РѕРІ
 
 	node *p = left->parent;
 	left->keys[left->n] = p->keys[c_ind];
@@ -179,18 +179,18 @@ void merge(node* left, node* right, int c_ind, int t){ //Слияние двух узлов
 	return;
 }
 
-void treeCorrect(node* r, int t){ //Корректирует дерево, если в узле меньше t-1 ключей
-	if(r->n == 0){			//Если абсолютно пустой, то корнем делаем единственного ребёнка
+void treeCorrect(node* r, int t){ //РљРѕСЂСЂРµРєС‚РёСЂРѕРІРєР° РґРµСЂРµРІР°, РµСЃР»Рё РІ СѓР·Р»Рµ РјРµРЅСЊС€Рµ t-1 РєР»СЋС‡РµР№
+	if(r->n == 0){			//Р•СЃР»Рё 0 РєР»СЋС‡РµР№, С‚Рѕ РєРѕСЂРЅРµРј СЃС‚Р°РЅРѕРІРёС‚СЃСЏ РµРґРёРЅСЃС‚РІРµРЅРЅС‹Р№ СЂРµР±С‘РЅРѕРє
 		r = r->childs[0];
-	}else if(r->parent == NULL){ //Если это корень, то всё нормально
+	}else if(r->parent == NULL){ //Р•СЃР»Рё СЌС‚Рѕ РєРѕСЂРµРЅСЊ, С‚Рѕ РІСЃС‘ С…РѕСЂРѕС€Рѕ
 		return;
 	}else{
-		node* p = r->parent; //находим родителя и номер по счёту, какой это был ребёнок
+		node* p = r->parent;
 		int c_ind = 0;
 		while(p->childs[c_ind] != r){
 			c_ind += 1;
 		}
-		_Bool left = 1;		//существование соседей
+		_Bool left = 1;		//РЎСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ СЃРѕСЃРµРґРµР№
 		_Bool right = 1;
 		if(c_ind == 0){
 			left = 0;
@@ -198,7 +198,7 @@ void treeCorrect(node* r, int t){ //Корректирует дерево, если в узле меньше t-1 
 			right = 0;
 		}
 
-		if((right) && (p->childs[c_ind+1]->n > t-1)){     //Выполняем либо поворот, либо слияние
+		if((right) && (p->childs[c_ind+1]->n > t-1)){     //РџРѕРІРѕСЂРѕС‡РёРІР°РµРј, Р»РёР±Рѕ РґРµР»Р°РµРј СЃР»РёСЏРЅРёРµ
 			node_turn(r, c_ind, tRIGHT);
 		}else if((left) && (p->childs[c_ind-1]->n > t-1)){
 			node_turn(r, c_ind, tLEFT);
@@ -216,27 +216,27 @@ void treeCorrect(node* r, int t){ //Корректирует дерево, если в узле меньше t-1 
 	return;
 }
 
-void delete(node* rt, int k, int t){			//Удаление ключа из дерева
-	node* r = keyFinder(rt, k);	//Находим нужный узел
+void delete(node* rt, int k, int t){			//РЈРґР°Р»РµРЅРёРµ РєР»СЋС‡Р°
+	node* r = keyFinder(rt, k);		//РќР°С…РѕРґРёРј РЅСѓР¶РЅС‹Р№ СѓР·РµР»
 	if(!r){
 		return;
 	}
-	int key_num = r->n;			//Находим индекс элемента
+	int key_num = r->n;			//РЅР°С…РѕРґРёРј РёРЅРґРµРєСЃ РЅСѓР¶РЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р°
 	int key_ind = 0;
 	while(r->keys[key_ind] != k){
 		key_ind++;
 	}
 
-	if(r->leaf){	//Удаляем из листа элемент и выполняем корректировку дерева, если там
-		for(int j = key_ind; j <= key_num-2; j++){	//оказалось меньше t-1 элемента.
+	if(r->leaf){				//СѓРґР°Р»СЏРµРј РёР· Р»РёСЃС‚Р°, РµСЃР»Рё СЃС‚Р°Р»Рѕ РјРµРЅСЊС€Рµ t-1 СЌР»РµРјРµРЅС‚РѕРІ, С‚Рѕ РґРµР»Р°РµРј РєРѕСЂСЂРµРєС‚РёСЂРѕРІРєСѓ
+		for(int j = key_ind; j <= key_num-2; j++){
 			r->keys[j] = r->keys[j+1];
 		}
 		r->n -= 1;
 		if(r->n < t-1){
 			treeCorrect(r, t);
 		}
-	}else{ //Удаление из внутреннего узла
-		node* child = r->childs[key_ind+1];	//Ищем самый левый лист ребёнка справа
+	}else{ 						//РЈРґР°Р»РµРЅРёРµ РёР· РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ СѓР·Р»Р°
+		node* child = r->childs[key_ind+1];	//РС‰РµРј СЃР°РјС‹Р№ Р»РµРІС‹Р№ Р»РёСЃС‚ Сѓ СЃРѕСЃРµРґР° СЃРїСЂР°РІР°
 		while(!child->leaf){
 			child = child->childs[0];
 		}
@@ -246,7 +246,7 @@ void delete(node* rt, int k, int t){			//Удаление ключа из дерева
 	}
 }
 
-void tree_print(node* r){					//Вывод структуры дерева на экран(от листьев к корню)
+void tree_print(node* r){					//Р’С‹РІРѕРґ РґРµСЂРµРІР°
 	if(!r->leaf){
 		for(int i = 0; i <= r->n; i++){
 			tree_print(r->childs[i]);
