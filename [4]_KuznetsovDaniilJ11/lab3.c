@@ -9,7 +9,7 @@
 #define TRUE 1
 #define FALSE 0
 
-//Табличный алгоритм вычисления CRC32
+//РўР°Р±Р»РёС‡РЅС‹Р№ Р°Р»РіРѕСЂРёС‚Рј РІС‹С‡РёСЃР»РµРЅРёСЏ CRC32
 uint32_t GetCRC32(void* data, int len){
 	unsigned char* tmp = (unsigned char*) data;
 	uint32_t CRC = 0xFFFFFFFF;
@@ -20,7 +20,7 @@ uint32_t GetCRC32(void* data, int len){
 	return CRC;
 }
 
-//Инитсиализатсия начальными данными таблитсы
+//РРЅРёС‚СЃРёР°Р»РёР·Р°С‚СЃРёСЏ РЅР°С‡Р°Р»СЊРЅС‹РјРё РґР°РЅРЅС‹РјРё С‚Р°Р±Р»РёС‚СЃС‹
 hash_table* tablInit(unsigned int size){
 	hash_table* t = (hash_table*)malloc(sizeof(hash_table));
 	cfc* tmp = (cfc*)malloc(sizeof(cfc)*size);
@@ -37,7 +37,7 @@ hash_table* tablInit(unsigned int size){
 	return t;
 }
 
-//Поиск ячейки в тсепочке
+//РџРѕРёСЃРє СЏС‡РµР№РєРё РІ С‚СЃРµРїРѕС‡РєРµ
 cell* chainFind(cell* c, char* data){
 	while(c != NULL){
 		if(strcmp(c->value, data) == 0){
@@ -48,7 +48,7 @@ cell* chainFind(cell* c, char* data){
 	return c;
 }
 
-//Поиск ячейки в таблитсе
+//РџРѕРёСЃРє СЏС‡РµР№РєРё РІ С‚Р°Р±Р»РёС‚СЃРµ
 _Bool tablFind(hash_table* t, char* data){
 	uint32_t CRC = GetCRC32(data, strlen(data));
 	unsigned int k = CRC % t->size;
@@ -60,7 +60,7 @@ _Bool tablFind(hash_table* t, char* data){
 	return FALSE;
 }
 
-//Добавление ячейки в тсепочку
+//Р”РѕР±Р°РІР»РµРЅРёРµ СЏС‡РµР№РєРё РІ С‚СЃРµРїРѕС‡РєСѓ
 void chainAdd(cfc* ch, char* data){
 	cell* c = malloc(sizeof(cell));
 	if(c == NULL){
@@ -78,7 +78,7 @@ void chainAdd(cfc* ch, char* data){
 	return;
 }
 
-//Добавление ячейки в таблитсу
+//Р”РѕР±Р°РІР»РµРЅРёРµ СЏС‡РµР№РєРё РІ С‚Р°Р±Р»РёС‚СЃСѓ
 void tablAdd(hash_table* t, char* data){
 	if(!tablFind(t, data)){
 		uint32_t CRC = GetCRC32(data, strlen(data));
@@ -89,7 +89,7 @@ void tablAdd(hash_table* t, char* data){
 	return;
 }
 
-//Удаление ячейки из тсепочки
+//РЈРґР°Р»РµРЅРёРµ СЏС‡РµР№РєРё РёР· С‚СЃРµРїРѕС‡РєРё
 cell* chainRemoveItem(cell* c, char* data) {
     cell* cneeded = chainFind(c, data);
 
@@ -108,7 +108,7 @@ cell* chainRemoveItem(cell* c, char* data) {
     return c;
 }
 
-//Удаление ячейки из таблитсы
+//РЈРґР°Р»РµРЅРёРµ СЏС‡РµР№РєРё РёР· С‚Р°Р±Р»РёС‚СЃС‹
 void tablRemoveItem(hash_table* t, char* data){
 	if(tablFind(t, data)){
 		uint32_t CRC = GetCRC32(data, strlen(data));
@@ -123,7 +123,7 @@ void tablRemoveItem(hash_table* t, char* data){
 }
 
 
-int main(void) {//IгВы
+int main(void) {//IГЈГ‚Г»
 	char command;
 	hash_table* ht = tablInit(500000);
 	char data[100] = "0";
