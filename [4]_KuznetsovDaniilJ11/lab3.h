@@ -1,6 +1,6 @@
 #pragma once
 
-//Таблитса для прямого алгоритма, полином 0x04c11db7
+//РўР°Р±Р»РёС‚СЃР° РґР»СЏ РїСЂСЏРјРѕРіРѕ Р°Р»РіРѕСЂРёС‚РјР°, РїРѕР»РёРЅРѕРј 0x04c11db7
 
 static uint32_t crctab[256] = {
     0x00000000, 0x04c11db7, 0x09823b6e, 0x0d4326d9,
@@ -69,17 +69,17 @@ static uint32_t crctab[256] = {
     0xbcb4666d, 0xb8757bda, 0xb5365d03, 0xb1f740b4,
   };
 
-typedef struct cell{	//Ячейка таблитсы
+typedef struct cell{	//РЇС‡РµР№РєР° С‚Р°Р±Р»РёС‚СЃС‹
 	char* value;
 	struct cell* next;
 }cell;
 
-typedef struct chains_of_cells{	//тсепочка ячеек
+typedef struct chains_of_cells{	//С‚СЃРµРїРѕС‡РєР° СЏС‡РµРµРє
 	_Bool empty;
 	cell* c;
 }cfc;
 
-typedef struct hash_table{	//хэш таблитса
+typedef struct hash_table{	//С…СЌС€ С‚Р°Р±Р»РёС‚СЃР°
 	cfc* items;
 	unsigned int size;
 }hash_table;
